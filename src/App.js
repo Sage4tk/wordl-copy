@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 import "./styles.css"
 
@@ -6,6 +6,13 @@ import "./styles.css"
 import Row from "./components/Row";
 
 function App() {
+
+  //focus on input
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, [])
 
   //current row
   const [curRow, setCurRow] = useState(0);
@@ -28,6 +35,15 @@ function App() {
 
   }, [inputText])
 
+  //clear input with esc button
+  useEffect(() => {
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        setInputText(""); 
+      }
+    })
+  }, [])
+
   //submit form
   const submitInput = (e) => {
     e.preventDefault();
@@ -43,14 +59,14 @@ function App() {
   }
 
   return (
-    <div className="App" onClick={() => {console.log(rowAnswer)}}>
+    <div className="App">
       <div className="container">
         {rowAnswer.map((data, index) => (
           <Row answer={data} key={index}/>
         ))}
       </div>
       <form onSubmit={submitInput}>
-        <input onChange={textHandler} value={inputText} minLength={5} maxLength={5} />
+        <input onChange={textHandler} value={inputText} minLength={5} maxLength={5} ref={inputRef} />
       </form>
     </div>
   );
