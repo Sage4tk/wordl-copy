@@ -16,7 +16,6 @@
 .row {
     display: flex;
     flex-direction: row;
-    width: 600px;
     margin-bottom: 0.5rem;
 }
 
