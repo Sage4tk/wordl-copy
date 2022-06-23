@@ -7,17 +7,8 @@ export default function Row({ answer, hidden, curRow, index }) {
 
     useEffect(() => {
         if (curRow > index) {
-            let sHidden = [...hidden.split("")];
 
-            setSubmit(answer.split("").map((e, index) => {
-                if (e === sHidden[index]) {
-                    sHidden[index] = 0;
-                    console.log(sHidden)
-                    return "green";
-                }
-                
-                return "grey"
-            }))
+            setSubmit(wordlAlgo(hidden.split(""), answer.split("")));
         }
     }, [curRow]);
 
@@ -30,4 +21,32 @@ export default function Row({ answer, hidden, curRow, index }) {
             <div className="column">{answer[4] ? answer[4]:""}</div>
         </div>
     )
+}
+
+const wordlAlgo = (realAnswer, userAnswer) => {
+    let arrayA = [];
+
+    for (let i = 0; i < realAnswer.length; i++) {
+        if (realAnswer[i] === userAnswer[i]) {
+            arrayA = [...arrayA, "green"];
+            userAnswer[i] = null;
+            realAnswer[i] = null;
+        } else {
+            arrayA = [...arrayA, null]
+        }
+    }
+
+    for (let i = 0; i < realAnswer.length; i++) {
+        if (realAnswer[i]) {
+            if (userAnswer.includes(realAnswer[i])) {
+                arrayA[userAnswer.indexOf(realAnswer[i])] = "yellow";
+                realAnswer[i] = null;
+            }
+        }
+    }
+
+    return arrayA.map(e => {
+        if (e === null) return "grey"
+        return e
+    });
 }
