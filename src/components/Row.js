@@ -7,18 +7,25 @@ export default function Row({ answer, hidden, curRow, index }) {
 
     useEffect(() => {
         if (curRow > index) {
-
             setSubmit(wordlAlgo(hidden.split(""), answer.split("")));
         }
     }, [curRow]);
 
+    const bgStyle = (arg) => {
+        if (!arg) return;
+
+        return {
+            background: arg
+        }
+    } 
+
     return (
         <div className="row" onClick={() => {console.log(submit)}}>
-            <div className="column">{answer[0] ? answer[0]:""}</div>
-            <div className="column">{answer[1] ? answer[1]:""}</div>
-            <div className="column">{answer[2] ? answer[2]:""}</div>
-            <div className="column">{answer[3] ? answer[3]:""}</div>
-            <div className="column">{answer[4] ? answer[4]:""}</div>
+            <div className="column" style={bgStyle(submit[0])} >{answer[0] ? answer[0]:""}</div>
+            <div className="column" style={bgStyle(submit[1])} >{answer[1] ? answer[1]:""}</div>
+            <div className="column" style={bgStyle(submit[2])} >{answer[2] ? answer[2]:""}</div>
+            <div className="column" style={bgStyle(submit[3])} >{answer[3] ? answer[3]:""}</div>
+            <div className="column" style={bgStyle(submit[4])} >{answer[4] ? answer[4]:""}</div>
         </div>
     )
 }
