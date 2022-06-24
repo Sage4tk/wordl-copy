@@ -2,15 +2,17 @@ import { useEffect, useState, useRef } from "react";
 
 import "./styles.css"
 
+import words from "./words";
+
 //components
 import Row from "./components/Row";
 
 function App() {
   //win condition
-  const [windCond, setWindCond] = useState(0);
+  const [windCond, setWindCond] = useState(false);
 
   //check answer
-  const [hidden, setHidden] = useState("EARTH");  
+  const [hidden, setHidden] = useState(words[Math.floor(Math.random() * words.length)]);
 
   //focus on input
   const inputRef = useRef(null);
@@ -21,6 +23,12 @@ function App() {
 
   //current row
   const [curRow, setCurRow] = useState(0);
+
+  useEffect(() => {
+    if (curRow === 6) {
+      setWindCond(true)
+    }
+  }, [curRow])
 
   //row of answers
   const [rowAnswer, setRowAnswer] = useState(["","","","","",""]);
@@ -56,24 +64,41 @@ function App() {
     if (inputText.length < 5) {
       
     } else {
-      if (curRow < 5) {
+      if (curRow < 6) {
         setInputText("");
         setCurRow(curRow + 1);
-      }
+      } 
     }
     
   }
+
+  //restart button
+  const restartGame = () => {
+    setHidden(words[Math.floor(Math.random() * words.length)])
+    setWindCond(false);
+    setRowAnswer(["","","","","",""]);
+    setCurRow(0);
+    setInputText("");
+  }
+
+  useEffect(() => {
+    if (!windCond) {
+      inputRef.current.focus();
+    }
+  }, [windCond])
 
   return (
     <div className="App">
       <div className="container">
         {rowAnswer.map((data, index) => (
-          <Row answer={data} key={index} hidden={hidden} curRow={curRow} index={index} />
+          <Row answer={data} key={index} hidden={hidden} curRow={curRow} index={index} setWindCond={setWindCond} />
         ))}
       </div>
       <form onSubmit={submitInput}>
-        <input onChange={textHandler} value={inputText} minLength={5} maxLength={5} ref={inputRef} />
+        <input onChange={textHandler} value={inputText} minLength={5} maxLength={5} ref={inputRef} disabled={windCond} />
       </form>
+      {windCond && <div className="show-word">{hidden}</div>}
+      {windCond && <div className="restart"><p>The word is {hidden}</p><button onClick={restartGame}>New Word</button></div>}
     </div>
   );
 }
