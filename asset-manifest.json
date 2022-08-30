@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/wordl-copy/static/css/main.9366ac57.css",
+    "main.js": "/wordl-copy/static/js/main.ce0c3714.js",
+    "static/js/787.0c786e5c.chunk.js": "/wordl-copy/static/js/787.0c786e5c.chunk.js",
+    "index.html": "/wordl-copy/index.html",
+    "main.9366ac57.css.map": "/wordl-copy/static/css/main.9366ac57.css.map",
+    "main.ce0c3714.js.map": "/wordl-copy/static/js/main.ce0c3714.js.map",
+    "787.0c786e5c.chunk.js.map": "/wordl-copy/static/js/787.0c786e5c.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9366ac57.css",
+    "static/js/main.ce0c3714.js"
+  ]
+}
